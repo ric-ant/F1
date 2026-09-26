@@ -1,0 +1,62 @@
+[project]
+name = "f1"
+version = "0.1.0"
+description = "Dashboard HTML interativo de comparativo de voltas da Fórmula 1 usando a API OpenF1"
+authors = [
+    {name = "Ricardo Antonello",email = "ric.antonello@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "requests>=2.32.0",
+    "plotly>=5.24.0",
+]
+
+[project.scripts]
+f1-dashboard = "f1.cli:main"
+
+[tool.poetry]
+packages = [{include = "f1", from = "src"}]
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6"
+pytest = "^8.0"
+pytest-cov = "^5.0"
+mkdocs-material = "^9.5"
+taskipy = "^1.14.1"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=src/f1 --cov-report=term-missing --cov-fail-under=50"
+
+[tool.coverage.run]
+source = ["src/f1"]
+
+[tool.coverage.report]
+fail_under = 50
+show_missing = true
+
+[tool.taskipy.tasks]
+lint      = "ruff check src tests"
+format    = "ruff format src tests"
+test      = "pytest"
+docs      = "mkdocs build --strict"
+check     = "task lint && task format --check && task test && task docs"
+dashboard = "f1-dashboard --year 2023 --output dashboard_2023.html"
