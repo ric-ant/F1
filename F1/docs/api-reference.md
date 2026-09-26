@@ -2,7 +2,7 @@
 
 Este projeto consome a [API OpenF1](https://openf1.org) — uma API REST open-source com dados de telemetria, timing e sessões da Fórmula 1.
 
-Supervisionado e aprovado por: Ricardo Antonello
+
 
 - **Base URL:** `https://api.openf1.org/v1/`
 - **Autenticação:** não necessária para dados históricos (a partir de 2023)
